@@ -1,59 +1,87 @@
-Auto Data Processing Project
+# 🚗 Auto Data Processing & Analysis
 
-This project provides an object-oriented Python pipeline to load, clean, and analyze automobile data using Pandas. It includes two main classes: DataLoader and Processing. The project handles data cleaning, filtering, and basic statistical analysis on the dataset.
+A complete **object-oriented Python project** for loading, cleaning, and analyzing automobile datasets using **Pandas**.  
+This project demonstrates practical **OOP design**: `DataLoader → Processing → Analysis`.
 
-Project Structure
+---
 
-DataLoader: Loads CSV data.
+## Features
 
-Processing: Inherits DataLoader and performs data cleaning and analysis.
+### Data Loading
+- Reads CSV files using Pandas
+- Supports custom encoding
 
-How It Works
-DataLoader
+### Data Cleaning
+- Removes symbols (`$`, `km`, `,`)
+- Converts price and odometer to integers
+- Filters invalid years (1900–2020)
+- Filters unrealistic prices (500–500,000)
+- Resets index for a clean DataFrame
 
-Responsible for reading CSV files.
+### Data Analysis
+- Brand with the **highest average price**
+- Brand with the **lowest average price**
+- Brand with the **widest price range**
+- Highest average price by **year + brand**
+- Export results to CSV
 
-load_csv(): Loads the CSV file using pandas and stores it in the class.
+---
 
-Processing (inherits DataLoader)
+## Project Architecture
 
-Cleans the dataset and performs analysis.
-Cleaning steps include:
 
-Removing "$" and commas from price.
+### DataLoader
+- Handles reading CSV data
+- Stores data in class instance
 
-Removing "km" and commas from odometer.
+### Processing (inherits DataLoader)
+- Performs data cleaning
+- Applies filtering
+- Returns cleaned DataFrame
 
-Converting values to integers.
+### Analysis (inherits Processing)
+- Performs brand-wise & year-wise analysis
+- Returns results as dictionary
+- Exports results to CSV
 
-Filtering invalid registration years (1900–2020).
+---
 
-Filtering unrealistic price values (500–500000).
+## Example Usage
 
-Analysis Functions
+```python
+process = Analysis("autos.csv")
+process.load_csv()
+process.clean_data()
 
-highest_avg_price(): Prints the brand with the highest average price.
+results = process.run_analysis()
 
-least_avg_price(): Prints the brand with the lowest average price.
+process.export_cleaned_data()
+process.export_analysis_results(results)
 
-widest_range(): Prints the brand with the widest price range (max - min).
+for key, value in results.items():
+    print(f"{key}:\n{value}\n")
+## Output Example
 
-highest_avg_price_by_year(): Shows which brand and year combination has the highest average price.
+- BMW has the highest average price
+- Renault has the lowest average price
+- Audi has the widest price range
+- In 2016, brand Porsche had the highest average price
 
-Usage Example
+---
 
-processor = Processing("data.csv")
-auto = processor.load_csv()
-auto = processor.data_cleaning()
+## File Export
 
-processor.highest_avg_price()
-processor.least_avg_price()
-processor.widest_range()
-processor.highest_avg_price_by_year()
+- `auto_cleaned.csv` → Cleaned Dataset
+- `auto_analysis.csv` → Analysis Summary
 
-Requirements
-Python 3.x
-pandas
+---
 
-Install pandas:
+## Requirements
+
+- Python 3.8+
+- pandas
+
+Install dependencies:
+
+```bash
 pip install pandas
